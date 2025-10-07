@@ -13,8 +13,8 @@ public class Prueba0502 {
 		// Datos
 		MatDto bean = new MatDto();
 		bean.setIdCurso(1);
-		bean.setIdAlumno(8);
-		bean.setIdEmpleado(233);
+		bean.setIdAlumno(6);
+		bean.setIdEmpleado(2);
 		bean.setTipo("BECA");
 		bean.setCuotas(1);
 		// Proceso

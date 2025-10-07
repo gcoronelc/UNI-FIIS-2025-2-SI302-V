@@ -165,7 +165,22 @@ public class EducaService {
 			rs.close();
 			pstm.close();
 			if (cont == 0) {
-				throw new SQLException("Aluno no existe.");
+				throw new SQLException("Alumno no existe.");
+			}
+			// Validar empleado
+			sql = """
+					select count(1) cont from EMPLEADO
+					where emp_id=? 
+				""";
+			pstm = cn.prepareStatement(sql);
+			pstm.setInt(1, bean.getIdAlumno());
+			rs = pstm.executeQuery();
+			rs.next();
+			cont = rs.getInt("cont");
+			rs.close();
+			pstm.close();
+			if (cont == 0) {
+				throw new SQLException("Empleado no existe.");
 			}
 			// OPERACIONES
 			// Actualizar curso
@@ -181,6 +196,21 @@ public class EducaService {
 			if (filas == 0) {
 				throw new SQLException("Curso no existe.");
 			}
+			// Obtener precio del curso
+			sql = "select cur_precio precio from CURSO where cur_id = ?";
+			pstm = cn.prepareStatement(sql);
+			pstm.setInt(1, bean.getIdCurso());
+			rs = pstm.executeQuery();
+			rs.next();
+			double precio = rs.getDouble("precio");
+			rs.close();
+			pstm.close();
+			if(bean.getTipo().equals("BECA")){
+				precio = precio * 0.10;
+			}
+			if(bean.getTipo().equals("MEDIABECA")){
+				precio = precio * 0.50;
+			}
 			// Registrar la matricula
 			sql = """
 				insert into MATRICULA(cur_id,alu_id,emp_id,mat_tipo,
@@ -192,7 +222,7 @@ public class EducaService {
 			pstm.setInt(2, bean.getIdAlumno());
 			pstm.setInt(3, bean.getIdEmpleado());
 			pstm.setString(4, bean.getTipo());
-			pstm.setDouble(5, 1000.0);
+			pstm.setDouble(5, precio);
 			pstm.setDouble(6, bean.getCuotas());
 			pstm.executeUpdate();
 			pstm.close();
