@@ -226,10 +226,10 @@ public class EducaService {
 			pstm.setDouble(6, bean.getCuotas());
 			pstm.executeUpdate();
 			pstm.close();
-			// CONFIRMAR PROCESO
+			// CONFIRMAR PROCESO O TRANSACCION
 			bean.setEstado(1);
 			bean.setMensaje("Proceso concluido.");
-			cn.commit();
+			cn.commit(); 
 		} catch (SQLException e) {
 			bean.setEstado(0);
 			bean.setMensaje(e.getMessage());
