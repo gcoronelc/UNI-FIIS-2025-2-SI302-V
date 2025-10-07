@@ -1,0 +1,11 @@
+pe\edu\uni\educaapp\dto\MatDto.class
+pe\edu\uni\educaapp\EducaApp.class
+pe\edu\uni\educaapp\prueba\Prueba04.class
+pe\edu\uni\educaapp\prueba\Prueba0502.class
+pe\edu\uni\educaapp\prueba\Prueba02.class
+pe\edu\uni\educaapp\service\JdbcUtil.class
+pe\edu\uni\educaapp\db\AccesoDB.class
+pe\edu\uni\educaapp\prueba\Prueba03.class
+pe\edu\uni\educaapp\prueba\Prueba0501.class
+pe\edu\uni\educaapp\prueba\Prueba01.class
+pe\edu\uni\educaapp\service\EducaService.class
