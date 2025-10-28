@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "db48ef43-c609-4b75-a98e-ee82c5e2523b",
+		"name": "ProyectoDemo01",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24743107",
+		"_collection_link": "https://restless-crater-974849.postman.co/workspace/WS-UNI-FIIS-POO-2025-2~6d99b50b-d078-4224-a444-9ea7448104cc/collection/24743107-db48ef43-c609-4b75-a98e-ee82c5e2523b?action=share&source=collection_link&creator=24743107"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Saludo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/saludo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"saludo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Factorial",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/factorial/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"factorial",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "sumar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/sumar?n1=70&n2=80",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sumar"
+							],
+							"query": [
+								{
+									"key": "n1",
+									"value": "70"
+								},
+								{
+									"key": "n2",
+									"value": "80"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opera",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"n1\":9,\r\n    \"n2\":7\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/opera",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"opera"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
