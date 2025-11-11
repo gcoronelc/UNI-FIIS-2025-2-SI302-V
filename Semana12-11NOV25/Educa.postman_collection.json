@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "4a08faf9-decc-4c34-9e84-81f90a3d8b20",
+		"name": "Educa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24743107",
+		"_collection_link": "https://restless-crater-974849.postman.co/workspace/WS-UNI-FIIS-POO-2025-2~6d99b50b-d078-4224-a444-9ea7448104cc/collection/24743107-4a08faf9-decc-4c34-9e84-81f90a3d8b20?action=share&source=collection_link&creator=24743107"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Precio Curso - Coorecto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/educa/curso/precio/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"educa",
+								"curso",
+								"precio",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Precio Curso - Error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/educa/curso/precio/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"educa",
+								"curso",
+								"precio",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Matriculados - OK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/educa/curso/matriculados/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"educa",
+								"curso",
+								"matriculados",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Matriculados - Sin matricula",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/educa/curso/matriculados/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"educa",
+								"curso",
+								"matriculados",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Matriculados - No existe curso",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/educa/curso/matriculados/77",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"educa",
+								"curso",
+								"matriculados",
+								"77"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listado - Ok",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/educa/matricula/listado/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"educa",
+								"matricula",
+								"listado",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado - No encontrado",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/educa/matricula/listado/7\n\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"educa",
+								"matricula",
+								"listado",
+								"7\n\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado - Error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/educa/matricula/listado/777\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"educa",
+								"matricula",
+								"listado",
+								"777\n"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Matricular - Curso no existe",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCurso\":80,\r\n    \"idAlumno\":1000,\r\n    \"tipo\":\"Genial\",\r\n    \"cuotas\":100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/educa/matricular",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"educa",
+								"matricular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Matricular - Alumno no existe",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCurso\":8,\r\n    \"idAlumno\":1000,\r\n    \"tipo\":\"Genial\",\r\n    \"cuotas\":100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/educa/matricular",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"educa",
+								"matricular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Matricular Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCurso\":1,\r\n    \"idAlumno\":8,\r\n    \"tipo\":\"REGULAR\",\r\n    \"cuotas\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/educa/matricular",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"educa",
+								"matricular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validar: error",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
