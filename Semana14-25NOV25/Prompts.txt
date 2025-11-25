@@ -1,0 +1,95 @@
+Prompt 1
+------------------------------
+Eres un experto desarrollador de frontend con bootstrap y backend con spring boot.
+Necesito que de desarrolles un pagina de inicio de sesión, debe tener 2 campos: usuario y clave.
+Estos datos se validan en el servicio rest "http://localhost:8080/educa/validar", al cual se le envian los en datos en formato JSON en una solicitud tipo POST.
+Si los datos son correctos se obtiene un JSON con los datos del empleado, este JSON se debe guardar en SessionStorage y se debe abrir la pagina principal llamada "main.html".
+
+
+Prompt 2
+--------------------------------------------
+La pagina principal esta muy bien.
+Pero necesito que realices algunos cambios.
+(1) Debes agregar la opcion "Consultas" antes de "Reportes".
+(2) A la opcion "estudiantes" agruegale un submenu, la primera opcion es "Matricular", esta opcion carga la pagina "matricular.html".
+(3) Ademas de la opcion "Matricular" debes agregar 4 opciones mas de forma generica para poder completarlo.
+(4) De la misma forma, en las otras opciones de la barra de menu, menos en la opción Inicio debes agregarle un submenu de 5 opciones para yo completarlo.
+
+
+Prompt 2
+-------------------------------------------
+Tengo el siguiente enlace del menu:
+<a class="dropdown-item" href="matricular.html">
+	<i class="bi bi-person-plus-fill"></i>Matricular
+</a>
+Lo que necesito es que la pagina "matricular.html" se cargue en el div cuyo id es "divContenidoPrincipal", cual seria la mejor opcion, ya que debo repetirlo con las otras opciones del menu.
+
+Prompt 3
+--------------------------------------------------
+Eres un experto desarrollador de frontend con bootstrap y backend con spring boot.
+Crea un formulario de matricula.
+Los campos del formulario son:
+- IdCurso: se trata de un campo numerico entero mayor que cero.
+- idAlumno: se trata de un campo numerico entero mayor que cero.
+- tipo: se trata del tipo de matricula y puede tomar los siguientes valores "REGULAR", "MEDIABECA", "BECA".
+- cuotas: se trata de un campo numerico entero mayor que cero, su valor puede ser 1, 2 o 3..
+Ademas de estos campos tambien se debe incluir el campo "idEmpleado" al objeto JSON en la llamada al servicio rest, el valor de "idEmpleado" es un valor en duro,y es el valor 3.
+El servicio rest para procesar es formulario es "http://localhost:8080/educa/matricular" y el tipo de llamada es post.
+Recuerda que debes usar bootstrap.
+Si tienes alguna duda, puedes realizar las preguntas pertinentes, pero, una por una.
+
+
+Prompt 4
+-----------------------------------------------------------
+Desarrolla una pagina para consultar los matriculados en un curo.
+La url para realiza la consulta es: "http://localhost:8080/educa/matricula/listado/2".
+El ultimo digito de la URL es el codigo del curso.
+A continuación tienes un ejemplo del resultado del servicio:
+[
+    {
+        "idCurso": 2,
+        "idAlumno": 3,
+        "nombre": "GLADYS REYES CORTIJO",
+        "tipo": "REGULAR",
+        "precio": 1000.00,
+        "cuotas": 3,
+        "nota": 14
+    },
+    {
+        "idCurso": 2,
+        "idAlumno": 4,
+        "nombre": "SARA RIEGA FRIAS",
+        "tipo": "MEDIABECA",
+        "precio": 500.00,
+        "cuotas": 1,
+        "nota": 18
+    },
+    {
+        "idCurso": 2,
+        "idAlumno": 5,
+        "nombre": "JHON VELASQUEZ DEL CASTILLO",
+        "tipo": "MEDIABECA",
+        "precio": 500.00,
+        "cuotas": 1,
+        "nota": 17
+    },
+    {
+        "idCurso": 2,
+        "idAlumno": 9,
+        "nombre": "Yamina Ruiz",
+        "tipo": "REGULAR",
+        "precio": 1200.00,
+        "cuotas": 1,
+        "nota": null
+    }
+]
+
+
+
+
+
+
+
+
+
+

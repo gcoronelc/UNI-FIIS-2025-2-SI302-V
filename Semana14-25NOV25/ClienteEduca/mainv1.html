@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Educa - Panel Principal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar-custom {
+            background: var(--primary-gradient);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: white !important;
+            font-weight: 500;
+        }
+        
+        .navbar-custom .nav-link:hover {
+            color: #f0f0f0 !important;
+        }
+        
+        .user-info {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-left: 10px;
+        }
+        
+        .welcome-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        
+        .welcome-card h2 {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .info-card .icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .icon-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .icon-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .icon-info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .icon-warning {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+        
+        .btn-logout {
+            background: white;
+            color: #667eea;
+            border: 2px solid white;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        
+        .btn-logout:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-mortarboard-fill me-2"></i>
+                Sistema Educa
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="bi bi-house-door me-1"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-people me-1"></i>Estudiantes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-book me-1"></i>Cursos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-bar-chart me-1"></i>Reportes
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="user-info">
+                        <i class="bi bi-person-circle me-2"></i>
+                        <span id="nombreUsuario">Usuario</span>
+                    </div>
+                    <button class="btn btn-logout ms-3" onclick="cerrarSesion()">
+                        <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="container">
+        <!-- Tarjeta de Bienvenida -->
+        <div class="welcome-card">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2>¡Bienvenido al Sistema Educa!</h2>
+                    <p class="lead mb-0" id="mensajeBienvenida">Cargando información...</p>
+                    <p class="text-muted mt-2" id="infoSesion"></p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <i class="bi bi-emoji-smile" style="font-size: 5rem; color: #667eea;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Información del Usuario -->
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="info-card">
+                    <div class="icon icon-primary">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+                    <h6 class="text-muted">Rol</h6>
+                    <h4 id="rolUsuario">-</h4>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="info-card">
+                    <div class="icon icon-success">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <h6 class="text-muted">Departamento</h6>
+                    <h4 id="departamentoUsuario">-</h4>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="info-card">
+                    <div class="icon icon-info">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                    <h6 class="text-muted">Correo</h6>
+                    <h4 id="correoUsuario" style="font-size: 0.9rem;">-</h4>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="info-card">
+                    <div class="icon icon-warning">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <h6 class="text-muted">Último Acceso</h6>
+                    <h4 id="ultimoAcceso" style="font-size: 0.9rem;">-</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Accesos Rápidos -->
+        <div class="welcome-card mt-4">
+            <h4 class="mb-4">
+                <i class="bi bi-lightning-charge-fill me-2" style="color: #667eea;"></i>
+                Accesos Rápidos
+            </h4>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <a href="#" class="text-decoration-none">
+                        <div class="info-card text-center">
+                            <i class="bi bi-person-plus-fill" style="font-size: 2.5rem; color: #667eea;"></i>
+                            <h5 class="mt-3">Registrar Estudiante</h5>
+                            <p class="text-muted small">Añadir nuevos estudiantes al sistema</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="#" class="text-decoration-none">
+                        <div class="info-card text-center">
+                            <i class="bi bi-journal-plus" style="font-size: 2.5rem; color: #11998e;"></i>
+                            <h5 class="mt-3">Crear Curso</h5>
+                            <p class="text-muted small">Configurar nuevos cursos</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="#" class="text-decoration-none">
+                        <div class="info-card text-center">
+                            <i class="bi bi-file-earmark-bar-graph" style="font-size: 2.5rem; color: #4facfe;"></i>
+                            <h5 class="mt-3">Ver Reportes</h5>
+                            <p class="text-muted small">Consultar estadísticas y reportes</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Verificar si hay sesión activa
+        function verificarSesion() {
+            const empleadoData = sessionStorage.getItem('empleado');
+            
+            if (!empleadoData) {
+                // Si no hay sesión, redirigir al login
+                window.location.href = 'login.html';
+                return null;
+            }
+            
+            return JSON.parse(empleadoData);
+        }
+
+        // Cargar información del usuario
+        function cargarInformacionUsuario() {
+            const empleado = verificarSesion();
+            
+            if (!empleado) return;
+
+            // Actualizar nombre en navbar
+            document.getElementById('nombreUsuario').textContent = empleado.nombreCompleto || empleado.usuario;
+
+            // Actualizar mensaje de bienvenida
+            document.getElementById('mensajeBienvenida').textContent = 
+                `Hola ${empleado.nombreCompleto || empleado.usuario}, es un placer tenerte de vuelta.`;
+
+            // Actualizar información de sesión
+            const loginTime = sessionStorage.getItem('loginTime');
+            if (loginTime) {
+                const fecha = new Date(loginTime);
+                document.getElementById('infoSesion').textContent = 
+                    `Sesión iniciada: ${fecha.toLocaleString('es-PE')}`;
+            }
+
+            // Actualizar tarjetas de información
+            document.getElementById('rolUsuario').textContent = empleado.rol || 'No asignado';
+            document.getElementById('departamentoUsuario').textContent = empleado.departamento || 'No asignado';
+            document.getElementById('correoUsuario').textContent = empleado.correo || 'No disponible';
+            
+            if (empleado.ultimoAcceso) {
+                const ultimoAcceso = new Date(empleado.ultimoAcceso);
+                document.getElementById('ultimoAcceso').textContent = 
+                    ultimoAcceso.toLocaleDateString('es-PE');
+            } else {
+                document.getElementById('ultimoAcceso').textContent = 'Primer acceso';
+            }
+        }
+
+        // Función para cerrar sesión
+        function cerrarSesion() {
+            if (confirm('¿Está seguro que desea cerrar sesión?')) {
+                // Limpiar sessionStorage
+                sessionStorage.clear();
+                
+                // Redirigir al login
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Cargar información al iniciar la página
+        document.addEventListener('DOMContentLoaded', cargarInformacionUsuario);
+    </script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - Sistema Educa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .login-header i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        .login-body {
+            padding: 40px;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: none;
+        }
+        .form-control {
+            border-left: none;
+        }
+        .alert {
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+            border-width: 0.15em;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <i class="bi bi-person-circle"></i>
+            <h3 class="mb-0">Sistema Educa</h3>
+            <p class="mb-0 mt-2" style="font-size: 0.9rem;">Inicio de Sesión</p>
+        </div>
+        
+        <div class="login-body">
+            <div id="alertContainer"></div>
+            
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="usuario" class="form-label">Usuario</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-person"></i>
+                        </span>
+                        <input type="text" class="form-control" id="usuario" name="usuario" 
+                               placeholder="Ingrese su usuario" required autocomplete="username">
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="clave" class="form-label">Contraseña</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-lock"></i>
+                        </span>
+                        <input type="password" class="form-control" id="clave" name="clave" 
+                               placeholder="Ingrese su contraseña" required autocomplete="current-password">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-login w-100" id="btnLogin">
+                    <span id="btnText">Iniciar Sesión</span>
+                    <span id="btnSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const alertContainer = document.getElementById('alertContainer');
+        const btnLogin = document.getElementById('btnLogin');
+        const btnText = document.getElementById('btnText');
+        const btnSpinner = document.getElementById('btnSpinner');
+
+        // Función para mostrar alertas
+        function mostrarAlerta(mensaje, tipo) {
+            const alerta = `
+                <div class="alert alert-${tipo} alert-dismissible fade show" role="alert">
+                    <i class="bi bi-${tipo === 'danger' ? 'exclamation-triangle' : 'check-circle'}-fill me-2"></i>
+                    ${mensaje}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            alertContainer.innerHTML = alerta;
+            
+            // Auto-cerrar después de 5 segundos
+            setTimeout(() => {
+                const alert = alertContainer.querySelector('.alert');
+                if (alert) {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }
+            }, 5000);
+        }
+
+        // Función para cambiar estado del botón
+        function cambiarEstadoBoton(cargando) {
+            btnLogin.disabled = cargando;
+            if (cargando) {
+                btnText.textContent = 'Validando...';
+                btnSpinner.classList.remove('d-none');
+            } else {
+                btnText.textContent = 'Iniciar Sesión';
+                btnSpinner.classList.add('d-none');
+            }
+        }
+
+        // Manejar el envío del formulario
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Limpiar alertas previas
+            alertContainer.innerHTML = '';
+            
+            // Obtener valores del formulario
+            const usuario = document.getElementById('usuario').value.trim();
+            const clave = document.getElementById('clave').value;
+            
+            // Validación básica
+            if (!usuario || !clave) {
+                mostrarAlerta('Por favor, complete todos los campos', 'warning');
+                return;
+            }
+            
+            // Preparar datos para envío
+            const credenciales = {
+                usuario: usuario,
+                clave: clave
+            };
+            
+            // Cambiar estado del botón
+            cambiarEstadoBoton(true);
+            
+            try {
+                // Realizar petición POST al servicio REST
+                const response = await fetch('http://localhost:8080/educa/validar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(credenciales)
+                });
+                
+                // Verificar si la respuesta es exitosa
+                if (response.ok) {
+                    const empleado = await response.json();
+                    
+                    // Guardar datos del empleado en SessionStorage
+                    sessionStorage.setItem('empleado', JSON.stringify(empleado));
+                    sessionStorage.setItem('usuario', usuario);
+                    sessionStorage.setItem('loginTime', new Date().toISOString());
+                    
+                    // Mostrar mensaje de éxito
+                    mostrarAlerta('Inicio de sesión exitoso. Redirigiendo...', 'success');
+                    
+                    // Redirigir a la página principal después de 1 segundo
+                    setTimeout(() => {
+                        window.location.href = 'main.html';
+                    }, 1000);
+                    
+                } else {
+                    // Manejar diferentes códigos de error
+                    let mensajeError = 'Credenciales inválidas. Por favor, verifique sus datos.';
+                    
+                    if (response.status === 401) {
+                        mensajeError = 'Usuario o contraseña incorrectos.';
+                    } else if (response.status === 404) {
+                        mensajeError = 'Servicio no disponible. Contacte al administrador.';
+                    } else if (response.status === 500) {
+                        mensajeError = 'Error en el servidor. Intente nuevamente más tarde.';
+                    }
+                    
+                    mostrarAlerta(mensajeError, 'danger');
+                    cambiarEstadoBoton(false);
+                }
+                
+            } catch (error) {
+                console.error('Error en la petición:', error);
+                mostrarAlerta('Error de conexión con el servidor. Verifique su conexión a internet.', 'danger');
+                cambiarEstadoBoton(false);
+            }
+        });
+
+        // Limpiar alertas al escribir
+        document.getElementById('usuario').addEventListener('input', () => {
+            alertContainer.innerHTML = '';
+        });
+        
+        document.getElementById('clave').addEventListener('input', () => {
+            alertContainer.innerHTML = '';
+        });
+    </script>
+</body>
+</html>

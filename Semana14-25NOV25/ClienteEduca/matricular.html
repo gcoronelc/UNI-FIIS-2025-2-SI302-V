@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Matrícula</title>
+    <!--link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"-->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #0d6efd;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2 class="form-title">Formulario de Matrícula</h2>
+            
+            <form id="formularioMatricula" novalidate>
+                <div class="mb-3">
+                    <label for="idCurso" class="form-label">ID Curso <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="idCurso" name="idCurso" min="1" required>
+                    <div class="invalid-feedback">
+                        Por favor, ingrese un ID de curso válido (mayor que 0).
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="idAlumno" class="form-label">ID Alumno <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="idAlumno" name="idAlumno" min="1" required>
+                    <div class="invalid-feedback">
+                        Por favor, ingrese un ID de alumno válido (mayor que 0).
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="tipo" class="form-label">Tipo de Matrícula <span class="text-danger">*</span></label>
+                    <select class="form-select" id="tipo" name="tipo" required>
+                        <option value="">Seleccione un tipo</option>
+                        <option value="REGULAR">REGULAR</option>
+                        <option value="MEDIABECA">MEDIABECA</option>
+                        <option value="BECA">BECA</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Por favor, seleccione un tipo de matrícula.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cuotas" class="form-label">Cuotas <span class="text-danger">*</span></label>
+                    <select class="form-select" id="cuotas" name="cuotas" required>
+                        <option value="">Seleccione cantidad de cuotas</option>
+                        <option value="1">1 cuota</option>
+                        <option value="2">2 cuotas</option>
+                        <option value="3">3 cuotas</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Por favor, seleccione la cantidad de cuotas.
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="button" id="btnMatricular" class="btn btn-primary btn-lg">Matricular</button>
+                    <button type="button" id="btnLimpiar" class="btn btn-secondary">Limpiar Formulario</button>
+                </div>
+            </form>
+
+            <div id="mensajeResultado" class="mt-3"></div>
+        </div>
+    </div>
+
+    <!--script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script-->
+    <script>
+        // Constantes
+        const ID_EMPLEADO = 3;
+        const URL_SERVICIO = 'http://localhost:8080/educa/matricular';
+
+        // Referencias a elementos del DOM
+        const form = document.getElementById('formularioMatricula');
+        const btnMatricular = document.getElementById('btnMatricular');
+        const btnLimpiar = document.getElementById('btnLimpiar');
+        const mensajeDiv = document.getElementById('mensajeResultado');
+
+        // Función para validar el formulario
+        function validarFormulario() {
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                return false;
+            }
+            return true;
+        }
+
+        // Función para obtener los datos del formulario
+        function obtenerDatosFormulario() {
+            return {
+                idCurso: parseInt(document.getElementById('idCurso').value),
+                idAlumno: parseInt(document.getElementById('idAlumno').value),
+                tipo: document.getElementById('tipo').value,
+                cuotas: parseInt(document.getElementById('cuotas').value),
+                idEmpleado: ID_EMPLEADO
+            };
+        }
+
+        // Función para mostrar mensaje de éxito
+        function mostrarMensajeExito(data) {
+            mensajeDiv.innerHTML = `
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>¡Éxito!</strong> La matrícula se ha registrado correctamente.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <hr>
+                    <h6>Respuesta del servidor:</h6>
+                    <pre class="mb-0">${JSON.stringify(data, null, 2)}</pre>
+                </div>
+            `;
+        }
+
+        // Función para mostrar mensaje de error
+        function mostrarMensajeError(error) {
+            mensajeDiv.innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error:</strong> ${error.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+        }
+
+        // Función para enviar los datos al servidor
+        async function matricularAlumno() {
+            try {
+                const datosMatricula = obtenerDatosFormulario();
+                
+                const response = await fetch(URL_SERVICIO, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(datosMatricula)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor: ' + response.status);
+                }
+
+                const data = await response.json();
+                mostrarMensajeExito(data);
+                
+            } catch (error) {
+                mostrarMensajeError(error);
+            }
+        }
+
+        // Función para limpiar el formulario
+        function limpiarFormulario() {
+            form.reset();
+            form.classList.remove('was-validated');
+            mensajeDiv.innerHTML = '';
+        }
+
+        // Event listener para el botón Matricular
+        btnMatricular.addEventListener('click', async function() {
+            mensajeDiv.innerHTML = '';
+            
+            if (validarFormulario()) {
+                await matricularAlumno();
+            }
+        });
+
+        // Event listener para el botón Limpiar
+        btnLimpiar.addEventListener('click', limpiarFormulario);
+    </script>
+</body>
+</html>
